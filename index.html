@@ -6,17 +6,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
- body{
+html, body{
   margin:0;
-  height:100vh;
-  background:url("background.jpg") no-repeat center center fixed;
-  background-size:contain;
+  height:100%;
+}
+
+body{
+  min-height:100vh;       
+  min-height:100svh;      
+  background:url("background.jpg") no-repeat center center;
+  background-size:cover; 
   display:flex;
   justify-content:center;
   align-items:center;
   font-family:'Segoe UI', sans-serif;
   overflow:hidden;
 }
+
 
 
   .card{
