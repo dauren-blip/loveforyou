@@ -1,12 +1,126 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Мой сайт</title>
+<meta charset="UTF-8">
+<title>С 14 февраля ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  background:linear-gradient(135deg,#ff758c,#ff7eb3);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:Arial, sans-serif;
+  overflow:hidden;
+}
+
+.card{
+  background:white;
+  padding:40px;
+  border-radius:20px;
+  text-align:center;
+  max-width:400px;
+  box-shadow:0 0 30px rgba(0,0,0,0.2);
+  animation:fadeIn 2s;
+}
+
+h1{
+  color:#ff3366;
+  font-size:32px;
+}
+
+p{
+  font-size:18px;
+}
+
+button{
+  margin-top:20px;
+  padding:12px 25px;
+  border:none;
+  border-radius:20px;
+  background:#ff3366;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#ff1744;
+}
+
+.heart{
+  position:absolute;
+  color:red;
+  font-size:20px;
+  animation:floatUp 5s linear infinite;
+}
+
+@keyframes floatUp{
+  0%{
+    transform:translateY(0);
+    opacity:1;
+  }
+  100%{
+    transform:translateY(-100vh);
+    opacity:0;
+  }
+}
+
+@keyframes fadeIn{
+  from{opacity:0; transform:scale(0.8);}
+  to{opacity:1; transform:scale(1);}
+}
+</style>
 </head>
+
 <body>
-  <h1>МИРАС ЧМО</h1>
-  <p>Мирас черт</p>
+
+<div class="card">
+  <h1>С 14 февраля, любимая ❤️</h1>
+  <p id="text">
+    Ты делаешь мой мир ярче каждый день ✨
+  </p>
+
+  <button onclick="changeText()">Нажми меня 💌</button>
+</div>
+
+<script>
+const messages = [
+"Я тебя очень люблю ❤️",
+"Ты моя самая большая радость 💖",
+"Спасибо, что ты есть у меня 😘",
+"Хочу быть с тобой всегда 💑",
+"Ты — моё счастье 🥰"
+];
+
+let i = 0;
+
+function changeText(){
+  document.getElementById("text").innerText = messages[i];
+  i = (i + 1) % messages.length;
+}
+
+// Сердечки
+function createHeart(){
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random()*100 + "vw";
+  heart.style.fontSize = (Math.random()*20+10) + "px";
+  document.body.appendChild(heart);
+
+  setTimeout(()=>{
+    heart.remove();
+  },5000);
+}
+
+setInterval(createHeart,300);
+</script>
+
 </body>
 </html>
+
 
