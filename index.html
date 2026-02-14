@@ -9,69 +9,82 @@
 body{
   margin:0;
   height:100vh;
-  background:linear-gradient(135deg,#ff758c,#ff7eb3);
+  background:linear-gradient(135deg,#ff4e50,#f9d423);
   display:flex;
   justify-content:center;
   align-items:center;
-  font-family:Arial, sans-serif;
+  font-family:'Segoe UI', sans-serif;
   overflow:hidden;
 }
 
 .card{
   background:white;
-  padding:40px;
-  border-radius:20px;
+  padding:45px;
+  border-radius:25px;
   text-align:center;
-  max-width:400px;
-  box-shadow:0 0 30px rgba(0,0,0,0.2);
-  animation:fadeIn 2s;
+  max-width:420px;
+  box-shadow:0 0 40px rgba(0,0,0,0.25);
+  animation:pop 1.5s ease;
+}
+
+@keyframes pop{
+  0%{transform:scale(0); opacity:0;}
+  80%{transform:scale(1.1);}
+  100%{transform:scale(1); opacity:1;}
 }
 
 h1{
-  color:#ff3366;
-  font-size:32px;
+  color:#ff1744;
+  font-size:34px;
+  animation:pulse 2s infinite;
 }
 
-p{
-  font-size:18px;
+@keyframes pulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.1);}
+  100%{transform:scale(1);}
+}
+
+#text{
+  font-size:19px;
+  min-height:60px;
+  margin-top:15px;
+  animation:fade 1s;
+}
+
+@keyframes fade{
+  from{opacity:0;}
+  to{opacity:1;}
 }
 
 button{
-  margin-top:20px;
-  padding:12px 25px;
+  margin-top:25px;
+  padding:14px 30px;
   border:none;
-  border-radius:20px;
-  background:#ff3366;
+  border-radius:30px;
+  background:#ff1744;
   color:white;
-  font-size:16px;
+  font-size:17px;
   cursor:pointer;
+  transition:0.3s;
 }
 
 button:hover{
-  background:#ff1744;
+  background:#ff5252;
+  transform:scale(1.1);
 }
 
+/* floating hearts */
 .heart{
   position:absolute;
-  color:red;
-  font-size:20px;
-  animation:floatUp 5s linear infinite;
+  bottom:-20px;
+  color:#ff1744;
+  animation:floatUp 6s linear infinite;
 }
 
 @keyframes floatUp{
-  0%{
-    transform:translateY(0);
-    opacity:1;
-  }
-  100%{
-    transform:translateY(-100vh);
-    opacity:0;
-  }
-}
-
-@keyframes fadeIn{
-  from{opacity:0; transform:scale(0.8);}
-  to{opacity:1; transform:scale(1);}
+  from{transform:translateY(0); opacity:1;}
+  to{transform:translateY(-110vh); opacity:0;}
 }
 </style>
 </head>
@@ -80,47 +93,54 @@ button:hover{
 
 <div class="card">
   <h1>С 14 февраля, любимая ❤️</h1>
-  <p id="text">
-    Ты делаешь мой мир ярче каждый день ✨
-  </p>
-
-  <button onclick="changeText()">Нажми меня 💌</button>
+  <p id="text"></p>
+  <button onclick="nextMessage()">Нажми меня 💌</button>
 </div>
 
 <script>
 const messages = [
-"Я тебя очень люблю ❤️",
-"Ты моя самая большая радость 💖",
-"Спасибо, что ты есть у меня 😘",
-"Хочу быть с тобой всегда 💑",
-"Ты — моё счастье 🥰"
+"Ты делаешь мой мир ярче ✨",
+"Я безумно тебя люблю ❤️",
+"Ты моё счастье 💖",
+"Хочу всегда быть рядом с тобой 💑",
+"Ты — лучшее, что случалось со мной 🥰"
 ];
 
-let i = 0;
+let index = 0;
+let charIndex = 0;
 
-function changeText(){
-  document.getElementById("text").innerText = messages[i];
-  i = (i + 1) % messages.length;
+function typeText(){
+  if(charIndex < messages[index].length){
+    document.getElementById("text").innerHTML += messages[index][charIndex];
+    charIndex++;
+    setTimeout(typeText,50);
+  }
 }
 
-// Сердечки
+function nextMessage(){
+  charIndex = 0;
+  document.getElementById("text").innerHTML = "";
+  typeText();
+  index = (index + 1) % messages.length;
+}
+
+/* hearts generator */
 function createHeart(){
   const heart = document.createElement("div");
   heart.className = "heart";
   heart.innerHTML = "❤️";
   heart.style.left = Math.random()*100 + "vw";
-  heart.style.fontSize = (Math.random()*20+10) + "px";
+  heart.style.fontSize = (Math.random()*30+10) + "px";
   document.body.appendChild(heart);
 
-  setTimeout(()=>{
-    heart.remove();
-  },5000);
+  setTimeout(()=>heart.remove(),6000);
 }
 
-setInterval(createHeart,300);
+setInterval(createHeart,250);
+
+// start first message
+typeText();
 </script>
 
 </body>
 </html>
-
-
